@@ -178,3 +178,5 @@ WAGTAILSEARCH_BACKENDS = {
 
 # Wagtail settings
 WAGTAIL_SITE_NAME = "WhatsApp Demo"
+
+WEBHOOKS_WHATSAPP_TOKEN = os.environ.get("WEBHOOKS_WHATSAPP_TOKEN", "")

@@ -1,11 +1,15 @@
 import requests
 import json
+
+from django.conf import settings
 from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+
 from bakerydemo.base.models import StandardPage
 
-
+@csrf_exempt
 def whatsapp(request):
-    token = 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJFbmdhZ2VkIiwiZXhwIjoxNTU0MDc2Nzk5LCJpYXQiOjE1NTI0ODA5OTEsImlzcyI6IkVuZ2FnZWQiLCJqdGkiOiIxMjQyNjk4ZC0yMmM1LTQ4ZGYtYmJiYi1lMTE3NmFhNjVhNDYiLCJuYmYiOjE1NTI0ODA5OTAsInN1YiI6Im51bWJlcjoxNDMiLCJ0eXAiOiJhY2Nlc3MifQ.Jaj1zkgpjJQEQlgZxu5WV16IbXYu7Sjw-sskOnO7q7DMkZiYc79tBXlMK3yZ_453vz4UA4nOsPWjxWkxGhLtFQ'
+    token = settings.WEBHOOKS_WHATSAPP_TOKEN
     url = 'https://whatsapp.praekelt.org/v1/messages'
     if request.GET.get('text', None) and request['text'] == 'search':
         # blah blah
