@@ -11,16 +11,17 @@ from bakerydemo.base.models import StandardPage
 def whatsapp(request):
     token = settings.WEBHOOKS_WHATSAPP_TOKEN
     url = 'https://whatsapp.praekelt.org/v1/messages'
-    if request.GET.get('text', None) and request['text'] == 'search':
+    message = request.body['messages']['body']
+    contact = request.body["contacts"][0]["wa_id"]
+    if message and message == 'search':
         # blah blah
         pass
     else:
-        number = request["contacts"][0]["wa_id"]
-        if request.GET.get('text', None):
+        if message:
             data = {
                 "preview_url": False,
                 "recipient_type": "individual",
-                "to": number,
+                "to": contact,
                 "type": "text",
                 "text": {
                     "body": StandardPage.objects.get(live=True, title=request['text']).introduction
@@ -36,7 +37,7 @@ def whatsapp(request):
             data = {
                 "preview_url": False,
                 "recipient_type": "individual",
-                "to": number,
+                "to": contact,
                 "type": "text",
                 "text": {
                     "body": "Please send the word search to begin."
