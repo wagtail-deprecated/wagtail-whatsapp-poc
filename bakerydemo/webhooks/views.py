@@ -12,7 +12,7 @@ def whatsapp(request):
     token = settings.WEBHOOKS_WHATSAPP_TOKEN
     url = 'https://whatsapp.praekelt.org/v1/messages'
     try:
-        body = json.loads(request.body.decode('ASCII'))
+        body = json.loads(request.body.decode('utf-8'))
         message = body["messages"][0]["text"]["body"]
         contact = body["contacts"][0]["wa_id"]
     except:
