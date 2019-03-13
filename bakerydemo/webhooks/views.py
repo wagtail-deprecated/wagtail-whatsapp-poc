@@ -6,9 +6,11 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from bakerydemo.breads.models import BreadPage
+from bakerydemo.webhooks.decorators import is_engage_api
 
 
 @csrf_exempt
+@is_engage_api
 def whatsapp(request):
     token = settings.WEBHOOKS_WHATSAPP_TOKEN
     url = 'https://whatsapp.praekelt.org/v1/messages'
