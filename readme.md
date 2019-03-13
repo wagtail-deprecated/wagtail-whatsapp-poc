@@ -35,7 +35,7 @@ Setup with Vagrant
 Once you've installed the necessary dependencies run the following commands:
 
 ```bash
-git clone https://github.com/wagtail/bakerydemo.git
+git clone https://github.com/wagtail/wagtail-whatsapp-poc.git
 cd bakerydemo
 vagrant up
 vagrant ssh
@@ -109,7 +109,7 @@ Confirm that this is showing a compatible version of Python 3.x. If not, and you
 Now we're ready to set up the bakery demo project itself:
 
     cd ~/dev [or your preferred dev directory]
-    git clone https://github.com/wagtail/bakerydemo.git
+    git clone https://github.com/wagtail/wagtail-whatsapp-poc.git
     cd bakerydemo
     pip install -r requirements/base.txt
 
