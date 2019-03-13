@@ -1,7 +1,7 @@
 import requests
 import json
 from django.http import HttpResponse
-from wagtail.core.models import Page
+from bakerydemo.base.models import StandardPage
 
 
 def whatsapp(request):
@@ -18,7 +18,7 @@ def whatsapp(request):
                 "to": "xxx",
                 "type": "text",
                 "text": {
-                    "body": Page.objects.get(live=True, title=request['text']).title
+                    "body": StandardPage.objects.get(live=True, title=request['text']).introduction
                 }
             }
             headers={
