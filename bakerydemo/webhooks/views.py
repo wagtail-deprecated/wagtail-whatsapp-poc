@@ -15,11 +15,12 @@ def whatsapp(request):
         # blah blah
         pass
     else:
+        number = request["contacts"][0]["wa_id"]
         if request.GET.get('text', None):
             data = {
                 "preview_url": False,
                 "recipient_type": "individual",
-                "to": "xxx",
+                "to": number,
                 "type": "text",
                 "text": {
                     "body": StandardPage.objects.get(live=True, title=request['text']).introduction
@@ -35,7 +36,7 @@ def whatsapp(request):
             data = {
                 "preview_url": False,
                 "recipient_type": "individual",
-                "to": "xxx",
+                "to": number,
                 "type": "text",
                 "text": {
                     "body": "Please send the word search to begin."
