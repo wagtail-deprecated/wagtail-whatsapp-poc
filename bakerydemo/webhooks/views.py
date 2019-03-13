@@ -5,7 +5,8 @@ from django.conf import settings
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
-from bakerydemo.base.models import StandardPage
+from bakerydemo.breads.models import BreadPage
+
 
 @csrf_exempt
 def whatsapp(request):
@@ -20,7 +21,7 @@ def whatsapp(request):
     if message:
         try:
             # TODO: use actual search API here for more relevant results
-            body = StandardPage.objects.get(title__icontains=message).introduction
+            body = BreadPage.objects.get(title__icontains=message).introduction
         except:
             body = 'We could not find an Article matching that keyword. Please type in a different keyword...'
         data = {
