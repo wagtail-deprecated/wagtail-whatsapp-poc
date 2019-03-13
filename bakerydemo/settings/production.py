@@ -115,3 +115,5 @@ LOGGING = {
         },
     },
 }
+
+WHATSAPP_TOKEN = os.getenv('WHATSAPP_TOKEN')
