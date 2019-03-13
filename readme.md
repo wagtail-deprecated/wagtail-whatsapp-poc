@@ -36,7 +36,7 @@ Once you've installed the necessary dependencies run the following commands:
 
 ```bash
 git clone https://github.com/wagtail/wagtail-whatsapp-poc.git
-cd bakerydemo
+cd wagtail-whatsapp-poc
 vagrant up
 vagrant ssh
 # then, within the SSH session:
@@ -62,7 +62,7 @@ Run the following commands:
 
 ```bash
 git clone https://github.com/wagtail/bakerydemo.git
-cd bakerydemo
+cd wagtail-whatsapp-poc
 docker-compose up --build -d
 docker-compose run app /venv/bin/python manage.py load_initial_data
 docker-compose up
@@ -96,21 +96,21 @@ You can run the Wagtail demo locally without setting up Vagrant or Docker and si
 With [PIP](https://github.com/pypa/pip) and [virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/)
 installed, run:
 
-    mkvirtualenv wagtailbakerydemo
+    mkvirtualenv wagtailwhatsapppoc
     python --version
 
 Confirm that this is showing a compatible version of Python 3.x. If not, and you have multiple versions of Python installed on your system, you may need to specify the appropriate version when creating the virtualenv:
 
     deactivate
-    rmvirtualenv wagtailbakerydemo
-    mkvirtualenv wagtailbakerydemo --python=python3.6
+    rmvirtualenv wagtailwhatsapppoc
+    mkvirtualenv wagtailwhatsapppoc --python=python3.6
     python --version
 
 Now we're ready to set up the bakery demo project itself:
 
     cd ~/dev [or your preferred dev directory]
     git clone https://github.com/wagtail/wagtail-whatsapp-poc.git
-    cd bakerydemo
+    cd wagtail-whatsapp-poc
     pip install -r requirements/base.txt
 
 Next, we'll set up our local environment variables. We use [django-dotenv](https://github.com/jpadilla/django-dotenv)
@@ -133,7 +133,7 @@ Deploy to Heroku
 If you don't want to test locally you can deploy a demo site to a publicly accessible server with [Heroku's](https://heroku.com)
 one-click deployment solution to their free 'Hobby' tier:
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/wagtail/bakerydemo)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/wagtail/wagtail-whatsapp-poc)
 
 If you do not have a Heroku account, clicking the above button will walk you through the steps
 to generate one.  At this point you will be presented with a screen to configure your app. For our purposes,
