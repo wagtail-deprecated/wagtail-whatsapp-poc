@@ -20,7 +20,7 @@ def whatsapp(request):
     if message:
         try:
             # TODO: use actual search API here for more relevant results
-            body = StandardPage.objects.get(title==request['text']).introduction
+            body = StandardPage.objects.get(title__icontains=request['text']).introduction
         except:
             body = 'We could not find an Article matching that keyword. Please type in a different keyword...'
         data = {
