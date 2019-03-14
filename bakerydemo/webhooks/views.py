@@ -99,17 +99,7 @@ def whatsapp(request):
                         # get image id from response
                         data_1 = image_upload_response.json()
                         image_id = data_1['media'][0]['id']
-                        data = {
-                            "preview_url": False,
-                            "recipient_type": "individual",
-                            "to": contact,
-                            "type": "text",
-                            "text": {
-                                "body": "about to send image message",
-                            }
-                        }
-                        response = requests.post(
-                            url, data=json.dumps(data), headers=headers)
+        
                         # send media message with caption
                         data = {
                             "preview_url": False,
