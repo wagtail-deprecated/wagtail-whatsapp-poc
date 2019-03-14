@@ -76,6 +76,17 @@ def whatsapp(request):
                 'Authorization': 'Bearer %s' % token,
                 'Content-Type': 'application/json'
             }
+            data = {
+                "preview_url": False,
+                "recipient_type": "individual",
+                "to": contact,
+                "type": "text",
+                "text": {
+                    "body": 'I got into the else',
+                }
+            }
+            response = requests.post(
+                url, data=data, headers=headers)
             try:
                 page = BreadPage.objects.get(title__icontains=message)
                 if page.image:
