@@ -98,7 +98,7 @@ def whatsapp(request):
                         "to": contact,
                         "type": "text",
                         "text": {
-                            "body": "image.file.url",
+                            "body": image.file.url,
                         }
                     }
                     response = requests.post(
