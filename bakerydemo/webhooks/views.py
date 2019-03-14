@@ -41,14 +41,17 @@ def whatsapp(request):
                 url, data=json.dumps(data), headers=headers)
             return HttpResponse(response)
         else:
-            try:
-                # TODO: use actual search here for more relevant results
-                # TODO: return URL of the page that would give a preview
-                # TODO: return whole body not just introduction
-                body = BreadPage.objects.get(title__icontains=message).introduction
-            except:
-                # TODO: send a better welcome message and use name so it's more personal
-                body = 'We could not find an Article matching that keyword. Please type in a different keyword...'
+            # TODO: return URL of the page that would give a preview
+            # TODO: return whole body not just introduction
+            results = BreadPage.objects.live().search(message)
+            if len(results) == 1:
+                body = results[0].introduction
+            elif len(results) > 1:
+                body = "We've found " + len(results) + " articles:\n"
+                for result in results:
+                    body += "\n" + result.introduction
+            else:
+                body = "Sorry, we couldn't find an article matching that keyword"
             data = {
                 "preview_url": False,
                 "recipient_type": "individual",
