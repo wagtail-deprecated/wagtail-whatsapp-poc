@@ -1,7 +1,6 @@
 import requests
 import json
 import sys
-from PIL import Image
 from io import BytesIO
 
 from django.conf import settings
@@ -130,10 +129,6 @@ def whatsapp(request):
                         # get image id from response
                         data_1 = json.loads(image_upload_response.body.decode('utf-8'))
                         image_id = data_1['media'][0]['id']
-                        print(data_1)
-                        sys.stdout.flush()
-                        print(image_id)
-                        sys.stdout.flush()
                         data = {
                             "preview_url": False,
                             "recipient_type": "individual",
