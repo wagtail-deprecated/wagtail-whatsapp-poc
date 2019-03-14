@@ -49,7 +49,7 @@ def whatsapp(request):
             elif len(results) > 1:
                 body = "We've found %s articles:\n" % len(results)
                 for result in results:
-                    body += "\n" + result.introduction
+                    body += "\n\n" + result.introduction
             else:
                 body = "Sorry, we couldn't find an article matching that keyword"
             data = {
