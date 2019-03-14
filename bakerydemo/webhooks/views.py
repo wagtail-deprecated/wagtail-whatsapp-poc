@@ -91,7 +91,7 @@ def whatsapp(request):
                     
                     # get image id from response
                     image_id = image_upload_response['media'][0]['id']
-                    print image_id
+                    print(image_id)
                    
                     # send media message with caption
                     data = {
