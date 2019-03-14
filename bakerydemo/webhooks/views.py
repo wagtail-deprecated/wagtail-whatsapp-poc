@@ -81,6 +81,9 @@ def whatsapp(request):
                 if page.image:
                     # get image from admin
                     image_response = requests.get(page.image.url)
+                    print('$$$$$$')
+                    print(image_response)
+                    print('$$$$$$')
                     
                     # upload image
                     image_upload_response = requests.post(
@@ -88,10 +91,15 @@ def whatsapp(request):
                         data=image_response.raw, 
                         headers=headers
                     )
+                    print('######')
+                    print(image_upload_response)
+                    print('########')
                     
                     # get image id from response
                     image_id = image_upload_response['media'][0]['id']
+                    print('****')
                     print(image_id)
+                    print('****')
                    
                     # send media message with caption
                     data = {
