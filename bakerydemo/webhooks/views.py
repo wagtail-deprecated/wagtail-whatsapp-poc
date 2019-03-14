@@ -111,7 +111,7 @@ def whatsapp(request):
                         "to": contact,
                         "type": "text",
                         "text": {
-                            "body": "image_url",
+                            "body": image_url,
                         }
                     }
                     response = requests.post(
