@@ -25,7 +25,7 @@ def whatsapp(request):
         if 'join' in message:
             body = "Welcome %s. I can help you find information about bread. Please type in a type of bread that you would like to know more about, and I will send you a message with some details about that bread! \xF0\x9F\x98\x83" % name
             data = {
-            "preview_url": False,
+            "preview_url": True,
             "recipient_type": "individual",
             "to": contact,
             "type": "text",
@@ -47,10 +47,12 @@ def whatsapp(request):
             results = BreadPage.objects.live().search(search_word)
             if len(results) == 1:
                 body = results[0].introduction
+                body += "\n" + result.get_full_url()
             elif len(results) > 1:
-                body = "We've found " + len(results) + " articles:\n"
+                body = "We've found %s articles:" % len(results)
                 for result in results:
-                    body += "\n" + result.url
+                    body += "\n\n" + result.introduction
+                    body += "\n" + result.get_full_url()
             else:
                 body = "Sorry, we couldn't find an article matching that keyword"
             data = {
