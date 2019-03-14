@@ -127,7 +127,8 @@ def whatsapp(request):
                             url, data=json.dumps(data), headers=headers)
                         
                         # get image id from response
-                        image_id = image_upload_response['media'][0]['id']
+                        data = image_upload_response.json()
+                        image_id = data['media'][0]['id']
 
                         data = {
                             "preview_url": False,
