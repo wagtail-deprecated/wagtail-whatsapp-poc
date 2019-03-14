@@ -92,7 +92,31 @@ def whatsapp(request):
                 page = BreadPage.objects.get(title__icontains=message)
                 if page.image:
                     # get image from admin
-                    response = requests.get(image.url)
+                    data = {
+                        "preview_url": False,
+                        "recipient_type": "individual",
+                        "to": contact,
+                        "type": "text",
+                        "text": {
+                            "body": "image.file.url",
+                        }
+                    }
+                    response = requests.post(
+                        url, data=json.dumps(data), headers=headers)
+                     # get image from admin
+                    image_url = request.host + image.file.url
+                    data = {
+                        "preview_url": False,
+                        "recipient_type": "individual",
+                        "to": contact,
+                        "type": "text",
+                        "text": {
+                            "body": "image_url",
+                        }
+                    }
+                    response = requests.post(
+                        url, data=json.dumps(data), headers=headers)
+                    response = requests.get(image.file.url)
                     img = Image.open(BytesIO(response.content))
                     data = {
                         "preview_url": False,
