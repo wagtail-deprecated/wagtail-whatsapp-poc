@@ -72,12 +72,12 @@ def whatsapp(request):
                 url, data=json.dumps(data), headers=headers)
             return HttpResponse(response)
         else:
+             headers = {
+                    'Authorization': 'Bearer %s' % token,
+                    'Content-Type': 'application/json'
+            }
             try:
                 page = BreadPage.objects.get(title__icontains=message)
-                headers = {
-                        'Authorization': 'Bearer %s' % token,
-                        'Content-Type': 'application/json'
-                }
                 if page.image:
                     # get image from admin
                     image_response = requests.get(page.image.url, stream=True)
