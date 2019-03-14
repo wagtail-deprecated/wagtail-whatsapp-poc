@@ -80,16 +80,18 @@ def whatsapp(request):
                 page = BreadPage.objects.get(title__icontains=message)
                 if page.image:
                     # get image from admin
-                    image_response = requests.get(page.image.url, stream=True)
+                    image_response = requests.get(page.image.url)
                     
                     # upload image
                     image_upload_response = requests.post(
                         url, 
                         data=image_response.raw, 
-                        headers=headers)
+                        headers=headers
+                    )
                     
                     # get image id from response
                     image_id = image_upload_response['media'][0]['id']
+                    print image_id
                    
                     # send media message with caption
                     data = {
