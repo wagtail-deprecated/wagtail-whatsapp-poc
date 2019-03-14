@@ -41,7 +41,6 @@ def whatsapp(request):
                 url, data=json.dumps(data), headers=headers)
             return HttpResponse(response)
         elif 'search' in message:
-            # TODO: return URL of the page that would give a preview
             # TODO: return whole body not just introduction
             search_word = message[7:]
             results = BreadPage.objects.live().search(search_word)
@@ -102,7 +101,7 @@ def whatsapp(request):
                         }
                     }
                     response = requests.post(
-                        url, data=data, headers=headers)
+                        url, data=json.dumps(data), headers=headers)
                     print('$$$$$$')
                     print(image_response)
                     print('$$$$$$')
@@ -123,7 +122,7 @@ def whatsapp(request):
                         }
                     }
                     response = requests.post(
-                        url, data=data, headers=headers)
+                        url, data=json.dumps(data), headers=headers)
                     print('######')
                     print(image_upload_response)
                     print('########')
@@ -143,7 +142,7 @@ def whatsapp(request):
                         }
                     }
                     response = requests.post(
-                        url, data=data, headers=headers)
+                        url, data=json.dumps(data), headers=headers)
                     data = {
                         "preview_url": False,
                         "recipient_type": "individual",
@@ -154,7 +153,7 @@ def whatsapp(request):
                         }
                     }
                     response = requests.post(
-                        url, data=data, headers=headers)
+                        url, data=json.dumps(data), headers=headers)
                     # send media message with caption
                     data = {
                         "preview_url": False,
@@ -168,8 +167,8 @@ def whatsapp(request):
                     }
                     
                     response = requests.post(
-                        url, data=data, headers=headers)
-                    
+                        url, data=json.dumps(data), headers=headers)
+                    return HttpResponse(response)
 
                 else:
                      # send text message if no image
@@ -183,7 +182,7 @@ def whatsapp(request):
                         }
                     }
                     response = requests.post(
-                        url, data=data, headers=headers)
+                        url, data=json.dumps(data), headers=headers)
             except:
                 # no result or more than one result found
                 data = {
