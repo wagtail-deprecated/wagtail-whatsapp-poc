@@ -18,15 +18,13 @@ def whatsapp(request):
         body = json.loads(request.body.decode('utf-8'))
         message = body["messages"][0]["text"]["body"]
         contact = body["contacts"][0]["wa_id"]
+        name =  body["contacts"][0]["profile"]["name"]
     except:
         return HttpResponse('No body in request')
     if message:
-        try:
-            # TODO: use actual search API here for more relevant results
-            body = BreadPage.objects.get(title__icontains=message).introduction
-        except:
-            body = 'We could not find an Article matching that keyword. Please type in a different keyword...'
-        data = {
+        if 'join' in message:
+            body = "Welcome %s. I can help you find information about bread. Please type in a type of bread that you would like to know more about, and I will send you a message with some details about that bread! \xF0\x9F\x98\x83" % name
+            data = {
             "preview_url": False,
             "recipient_type": "individual",
             "to": contact,
@@ -34,14 +32,39 @@ def whatsapp(request):
             "text": {
                 "body": body
             }
-        }
-        headers={
-            'Authorization': 'Bearer %s' % token,
-            'Content-Type': 'application/json'
-        }
-        response = requests.post(
-            url, data=json.dumps(data), headers=headers)
-        return HttpResponse(response)
+            }
+            headers={
+                'Authorization': 'Bearer %s' % token,
+                'Content-Type': 'application/json'
+            }
+            response = requests.post(
+                url, data=json.dumps(data), headers=headers)
+            return HttpResponse(response)
+        else:
+            try:
+                # TODO: use actual search here for more relevant results
+                # TODO: return URL of the page that would give a preview
+                # TODO: return whole body not just introduction
+                body = BreadPage.objects.get(title__icontains=message).introduction
+            except:
+                # TODO: send a better welcome message and use name so it's more personal
+                body = 'We could not find an Article matching that keyword. Please type in a different keyword...'
+            data = {
+                "preview_url": False,
+                "recipient_type": "individual",
+                "to": contact,
+                "type": "text",
+                "text": {
+                    "body": body
+                }
+            }
+            headers={
+                'Authorization': 'Bearer %s' % token,
+                'Content-Type': 'application/json'
+            }
+            response = requests.post(
+                url, data=json.dumps(data), headers=headers)
+            return HttpResponse(response)
     else:
         data = {
             "preview_url": False,
