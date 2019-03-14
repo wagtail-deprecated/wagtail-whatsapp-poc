@@ -91,7 +91,7 @@ def whatsapp(request):
                             'Content-Type': 'image/jpeg'
                         }
                         # upload image
-                        image_upload_response = request.post(
+                        image_upload_response = requests.post(
                             media_url, 
                             data=f, 
                             headers=image_headers
