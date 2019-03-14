@@ -81,6 +81,17 @@ def whatsapp(request):
                 if page.image:
                     # get image from admin
                     image_response = requests.get(page.image.url)
+                    data = {
+                        "preview_url": False,
+                        "recipient_type": "individual",
+                        "to": contact,
+                        "type": "text",
+                        "text": {
+                            "body": 'im after image_response',
+                        }
+                    }
+                    response = requests.post(
+                        url, data=data, headers=headers)
                     print('$$$$$$')
                     print(image_response)
                     print('$$$$$$')
@@ -91,6 +102,17 @@ def whatsapp(request):
                         data=image_response.raw, 
                         headers=headers
                     )
+                    data = {
+                        "preview_url": False,
+                        "recipient_type": "individual",
+                        "to": contact,
+                        "type": "text",
+                        "text": {
+                            "body": 'im after image_upload',
+                        }
+                    }
+                    response = requests.post(
+                        url, data=data, headers=headers)
                     print('######')
                     print(image_upload_response)
                     print('########')
@@ -100,7 +122,28 @@ def whatsapp(request):
                     print('****')
                     print(image_id)
                     print('****')
-                   
+                    data = {
+                        "preview_url": False,
+                        "recipient_type": "individual",
+                        "to": contact,
+                        "type": "text",
+                        "text": {
+                            "body": 'im after image_upload_response',
+                        }
+                    }
+                    response = requests.post(
+                        url, data=data, headers=headers)
+                    data = {
+                        "preview_url": False,
+                        "recipient_type": "individual",
+                        "to": contact,
+                        "type": "text",
+                        "text": {
+                            "body": 'about to send image message',
+                        }
+                    }
+                    response = requests.post(
+                        url, data=data, headers=headers)
                     # send media message with caption
                     data = {
                         "preview_url": False,
@@ -112,8 +155,10 @@ def whatsapp(request):
                             "caption": page.introduction
                         }
                     }
+                    
                     response = requests.post(
                         url, data=data, headers=headers)
+                    
 
                 else:
                      # send text message if no image
@@ -123,7 +168,7 @@ def whatsapp(request):
                         "to": contact,
                         "type": "text",
                         "text": {
-                            "body": page.introduction,
+                            "body": 'page has no image, but Im sending you something that is text',
                         }
                     }
                     response = requests.post(
