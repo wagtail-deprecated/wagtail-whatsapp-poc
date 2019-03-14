@@ -93,90 +93,79 @@ def whatsapp(request):
                 if page.image:
                      # get image from admin
                     image = page.image
-                    image_url = request.host + image.file.url
-                    data = {
-                        "preview_url": False,
-                        "recipient_type": "individual",
-                        "to": contact,
-                        "type": "text",
-                        "text": {
-                            "body": image_url,
+                    r = image.get_rendition('fill-300x150|jpegquality-80')
+                    with r.image.open_file() as f:
+                        image_bytes = f.read()
+                        data = {
+                            "preview_url": False,
+                            "recipient_type": "individual",
+                            "to": contact,
+                            "type": "text",
+                            "text": {
+                                "body": "I got image bytes hopefully",
+                            }
                         }
-                    }
-                    response = requests.post(
-                        url, data=json.dumps(data), headers=headers)
-                    response = requests.get(image.file.url)
-                    img = image.open(BytesIO(response.content))
-                    data = {
-                        "preview_url": False,
-                        "recipient_type": "individual",
-                        "to": contact,
-                        "type": "text",
-                        "text": {
-                            "body": "im after image_response",
-                        }
-                    }
-                    response = requests.post(
-                        url, data=json.dumps(data), headers=headers)
+                        response = requests.post(
+                            url, data=json.dumps(data), headers=headers)
                     
-                    # upload image
-                    image_upload_response = requests.post(
-                        url, 
-                        data=img.raw, 
-                        headers=headers
-                    )
-                    data = {
-                        "preview_url": False,
-                        "recipient_type": "individual",
-                        "to": contact,
-                        "type": "text",
-                        "text": {
-                            "body": "im after image_upload",
+                        # upload image
+                        image_upload_response = requests.post(
+                            url, 
+                            data=image_bytes, 
+                            headers=headers
+                        )
+                        data = {
+                            "preview_url": False,
+                            "recipient_type": "individual",
+                            "to": contact,
+                            "type": "text",
+                            "text": {
+                                "body": "im after image_upload",
+                            }
                         }
-                    }
-                    response = requests.post(
-                        url, data=json.dumps(data), headers=headers)
-                    
-                    # get image id from response
-                    image_id = image_upload_response['media'][0]['id']
+                        response = requests.post(
+                            url, data=json.dumps(data), headers=headers)
+                        
+                        # get image id from response
+                        image_id = image_upload_response['media'][0]['id']
 
-                    data = {
-                        "preview_url": False,
-                        "recipient_type": "individual",
-                        "to": contact,
-                        "type": "text",
-                        "text": {
-                            "body": "im after image_upload_response",
+                        data = {
+                            "preview_url": False,
+                            "recipient_type": "individual",
+                            "to": contact,
+                            "type": "text",
+                            "text": {
+                                "body": "im after image_upload_response",
+                            }
                         }
-                    }
-                    response = requests.post(
-                        url, data=json.dumps(data), headers=headers)
-                    data = {
-                        "preview_url": False,
-                        "recipient_type": "individual",
-                        "to": contact,
-                        "type": "text",
-                        "text": {
-                            "body": "about to send image message",
+                        response = requests.post(
+                            url, data=json.dumps(data), headers=headers)
+                        data = {
+                            "preview_url": False,
+                            "recipient_type": "individual",
+                            "to": contact,
+                            "type": "text",
+                            "text": {
+                                "body": "about to send image message",
+                            }
                         }
-                    }
-                    response = requests.post(
-                        url, data=json.dumps(data), headers=headers)
-                    # send media message with caption
-                    data = {
-                        "preview_url": False,
-                        "recipient_type": "individual",
-                        "to": contact,
-                        "type": "image",
-                        "image": {
-                            "id": image_id,
-                            "caption": page.introduction
+                        response = requests.post(
+                            url, data=json.dumps(data), headers=headers)
+                        # send media message with caption
+                        data = {
+                            "preview_url": False,
+                            "recipient_type": "individual",
+                            "to": contact,
+                            "type": "image",
+                            "image": {
+                                "id": image_id,
+                                "caption": page.introduction
+                            }
                         }
-                    }
-                    
-                    response = requests.post(
-                        url, data=json.dumps(data), headers=headers)
-                    return HttpResponse(response)
+                        
+                        response = requests.post(
+                            url, data=json.dumps(data), headers=headers)
+                        return HttpResponse(response)
 
                 else:
                      # send text message if no image
