@@ -73,8 +73,8 @@ def whatsapp(request):
             return HttpResponse(response)
         else:
             headers = {
-                    'Authorization': 'Bearer %s' % token,
-                    'Content-Type': 'application/json'
+                'Authorization': 'Bearer %s' % token,
+                'Content-Type': 'application/json'
             }
             try:
                 page = BreadPage.objects.get(title__icontains=message)
