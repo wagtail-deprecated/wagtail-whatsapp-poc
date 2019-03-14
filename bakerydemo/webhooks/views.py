@@ -82,7 +82,7 @@ def whatsapp(request):
                 "to": contact,
                 "type": "text",
                 "text": {
-                    "body": 'I got into the else',
+                    "body": "I got into the else",
                 }
             }
             response = requests.post(
@@ -98,7 +98,7 @@ def whatsapp(request):
                         "to": contact,
                         "type": "text",
                         "text": {
-                            "body": 'im after image_response',
+                            "body": "im after image_response",
                         }
                     }
                     response = requests.post(
@@ -119,7 +119,7 @@ def whatsapp(request):
                         "to": contact,
                         "type": "text",
                         "text": {
-                            "body": 'im after image_upload',
+                            "body": "im after image_upload",
                         }
                     }
                     response = requests.post(
@@ -139,7 +139,7 @@ def whatsapp(request):
                         "to": contact,
                         "type": "text",
                         "text": {
-                            "body": 'im after image_upload_response',
+                            "body": "im after image_upload_response",
                         }
                     }
                     response = requests.post(
@@ -150,7 +150,7 @@ def whatsapp(request):
                         "to": contact,
                         "type": "text",
                         "text": {
-                            "body": 'about to send image message',
+                            "body": "about to send image message",
                         }
                     }
                     response = requests.post(
@@ -179,7 +179,7 @@ def whatsapp(request):
                         "to": contact,
                         "type": "text",
                         "text": {
-                            "body": 'page has no image, but Im sending you something that is text',
+                            "body": "page has no image, but Im sending you something that is text",
                         }
                     }
                     response = requests.post(
