@@ -1,5 +1,7 @@
 import requests
 import json
+from PIL import Image
+from io import BytesIO
 
 from django.conf import settings
 from django.http import HttpResponse
@@ -90,7 +92,8 @@ def whatsapp(request):
                 page = BreadPage.objects.get(title__icontains=message)
                 if page.image:
                     # get image from admin
-                    image_response = requests.get(page.image.url)
+                    response = requests.get(image.url)
+                    img = Image.open(BytesIO(response.content))
                     data = {
                         "preview_url": False,
                         "recipient_type": "individual",
@@ -102,14 +105,11 @@ def whatsapp(request):
                     }
                     response = requests.post(
                         url, data=json.dumps(data), headers=headers)
-                    print('$$$$$$')
-                    print(image_response)
-                    print('$$$$$$')
                     
                     # upload image
                     image_upload_response = requests.post(
                         url, 
-                        data=image_response.raw, 
+                        data=img.raw, 
                         headers=headers
                     )
                     data = {
@@ -123,15 +123,10 @@ def whatsapp(request):
                     }
                     response = requests.post(
                         url, data=json.dumps(data), headers=headers)
-                    print('######')
-                    print(image_upload_response)
-                    print('########')
                     
                     # get image id from response
                     image_id = image_upload_response['media'][0]['id']
-                    print('****')
-                    print(image_id)
-                    print('****')
+
                     data = {
                         "preview_url": False,
                         "recipient_type": "individual",
