@@ -107,11 +107,11 @@ def whatsapp(request):
                         }
                         response = requests.post(
                             url, data=json.dumps(data), headers=headers)
-                    
+                        media_url = 'https://whatsapp.praekelt.org/v1/media'
                         # upload image
                         image_upload_response = requests.post(
-                            url, 
-                            data=image_bytes.raw, 
+                            media_url, 
+                            data=image_bytes, 
                             headers=headers
                         )
                         data = {
