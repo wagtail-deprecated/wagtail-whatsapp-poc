@@ -47,7 +47,7 @@ def whatsapp(request):
             if len(results) == 1:
                 body = results[0].introduction
             elif len(results) > 1:
-                body = "We've found " + len(results) + " articles:\n"
+                body = "We've found %s articles:\n" % len(results)
                 for result in results:
                     body += "\n" + result.introduction
             else:
