@@ -97,7 +97,7 @@ def whatsapp(request):
                             headers=image_headers
                         )
                         # get image id from response
-                        data_1 = json.loads(image_upload_response.body.decode('utf-8'))
+                        data_1 = image_upload_response.json()
                         image_id = data_1['media'][0]['id']
                         data = {
                             "preview_url": False,
