@@ -77,17 +77,6 @@ def whatsapp(request):
                 'Authorization': 'Bearer %s' % token,
                 'Content-Type': 'application/json'
             }
-            data = {
-                "preview_url": False,
-                "recipient_type": "individual",
-                "to": contact,
-                "type": "text",
-                "text": {
-                    "body": "I got into the else",
-                }
-            }
-            response = requests.post(
-                url, data=json.dumps(data), headers=headers)
             try:
                 page = BreadPage.objects.get(title__icontains=message)
                 if page.image:
@@ -96,50 +85,20 @@ def whatsapp(request):
                     r = image.get_rendition('fill-300x150|jpegquality-80')
                     with r.image.open_file() as f:
                         image_bytes = f.read()
-                        data = {
-                            "preview_url": False,
-                            "recipient_type": "individual",
-                            "to": contact,
-                            "type": "text",
-                            "text": {
-                                "body": "I got image bytes hopefully",
-                            }
-                        }
-                        response = requests.post(
-                            url, data=json.dumps(data), headers=headers)
                         media_url = 'https://whatsapp.praekelt.org/v1/media'
+                        image_headers = {
+                            'Authorization': 'Bearer %s' % token,
+                            'Content-Type': 'image/jpeg'
+                        }
                         # upload image
                         image_upload_response = requests.post(
                             media_url, 
                             data=image_bytes, 
-                            headers=headers
+                            headers=image_headers
                         )
-                        data = {
-                            "preview_url": False,
-                            "recipient_type": "individual",
-                            "to": contact,
-                            "type": "text",
-                            "text": {
-                                "body": "im after image_upload",
-                            }
-                        }
-                        response = requests.post(
-                            url, data=json.dumps(data), headers=headers)
-                        
                         # get image id from response
                         data_1 = json.loads(image_upload_response.body.decode('utf-8'))
                         image_id = data_1['media'][0]['id']
-                        data = {
-                            "preview_url": False,
-                            "recipient_type": "individual",
-                            "to": contact,
-                            "type": "text",
-                            "text": {
-                                "body": "im after image_upload_response",
-                            }
-                        }
-                        response = requests.post(
-                            url, data=json.dumps(data), headers=headers)
                         data = {
                             "preview_url": False,
                             "recipient_type": "individual",
