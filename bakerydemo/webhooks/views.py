@@ -91,9 +91,9 @@ def whatsapp(request):
                             'Content-Type': 'image/jpeg'
                         }
                         # upload image
-                        image_upload_response = request.raw_post_data(
+                        image_upload_response = request.post(
                             media_url, 
-                            data=image_bytes, 
+                            data=image_bytes.raw, 
                             headers=image_headers
                         )
                         # get image id from response
