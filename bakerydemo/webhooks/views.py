@@ -111,7 +111,7 @@ def whatsapp(request):
                         # upload image
                         image_upload_response = requests.post(
                             url, 
-                            data=image_bytes, 
+                            data=image_bytes.raw, 
                             headers=headers
                         )
                         data = {
