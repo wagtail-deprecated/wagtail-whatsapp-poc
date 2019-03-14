@@ -84,7 +84,7 @@ def whatsapp(request):
                     image = page.image
                     r = image.get_rendition('fill-300x150|jpegquality-80')
                     with r.image.open_file() as f:
-                        image_bytes = f.read()
+                        # image_bytes = f.read()
                         media_url = 'https://whatsapp.praekelt.org/v1/media'
                         image_headers = {
                             'Authorization': 'Bearer %s' % token,
@@ -93,7 +93,7 @@ def whatsapp(request):
                         # upload image
                         image_upload_response = request.post(
                             media_url, 
-                            data=image_bytes.raw, 
+                            data=f, 
                             headers=image_headers
                         )
                         # get image id from response
