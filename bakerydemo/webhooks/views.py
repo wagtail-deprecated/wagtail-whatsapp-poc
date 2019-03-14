@@ -47,7 +47,7 @@ def whatsapp(request):
             results = BreadPage.objects.live().search(search_word)
             if len(results) == 1:
                 body = results[0].introduction
-                body += "\n" + result.get_full_url()
+                body += "\n" + results[0].get_full_url()
             elif len(results) > 1:
                 body = "We've found %s articles:" % len(results)
                 for result in results:
