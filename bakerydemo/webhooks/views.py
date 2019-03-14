@@ -40,16 +40,17 @@ def whatsapp(request):
             response = requests.post(
                 url, data=json.dumps(data), headers=headers)
             return HttpResponse(response)
-        else:
+        elif 'search' in message:
             # TODO: return URL of the page that would give a preview
             # TODO: return whole body not just introduction
-            results = BreadPage.objects.live().search(message)
+            search_word = message[7:]
+            results = BreadPage.objects.live().search(search_word)
             if len(results) == 1:
                 body = results[0].introduction
             elif len(results) > 1:
                 body = "We've found " + len(results) + " articles:\n"
                 for result in results:
-                    body += "\n" + result.introduction
+                    body += "\n" + result.url
             else:
                 body = "Sorry, we couldn't find an article matching that keyword"
             data = {
@@ -68,6 +69,67 @@ def whatsapp(request):
             response = requests.post(
                 url, data=json.dumps(data), headers=headers)
             return HttpResponse(response)
+        else:
+            try:
+                page = BreadPage.objects.get(title__icontains=message)
+                headers = {
+                        'Authorization': 'Bearer %s' % token,
+                        'Content-Type': 'application/json'
+                }
+                if page.image:
+                    # get image from admin
+                    image_response = requests.get(page.image.url, stream=True)
+                    
+                    # upload image
+                    image_upload_response = requests.post(
+                        url, 
+                        data=image_response.raw, 
+                        headers=headers)
+                    
+                    # get image id from response
+                    image_id = image_upload_response['media'][0]['id']
+                   
+                    # send media message with caption
+                    data = {
+                        "preview_url": False,
+                        "recipient_type": "individual",
+                        "to": contact,
+                        "type": "image",
+                        "image": {
+                            "id": image_id,
+                            "caption": page.introduction
+                        }
+                    }
+                    response = requests.post(
+                        url, data=data, headers=headers)
+
+                else:
+                     # send text message if no image
+                    data = {
+                        "preview_url": False,
+                        "recipient_type": "individual",
+                        "to": contact,
+                        "type": "text",
+                        "text": {
+                            "body": page.introduction,
+                        }
+                    }
+                    response = requests.post(
+                        url, data=data, headers=headers)
+            except:
+                # no result or more than one result found
+                data = {
+                    "preview_url": False,
+                    "recipient_type": "individual",
+                    "to": contact,
+                    "type": "text",
+                    "text": {
+                        "body": 'Please try again by typing search followed by keyword',
+                    }
+                }
+                response = requests.post(
+                    url, data=data, headers=headers)
+
     else:
         data = {
             "preview_url": False,
