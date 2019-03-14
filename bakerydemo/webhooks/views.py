@@ -85,7 +85,7 @@ def whatsapp(request):
                 }
             }
             response = requests.post(
-                url, data=data, headers=headers)
+                url, data=json.dumps(data), headers=headers)
             try:
                 page = BreadPage.objects.get(title__icontains=message)
                 if page.image:
