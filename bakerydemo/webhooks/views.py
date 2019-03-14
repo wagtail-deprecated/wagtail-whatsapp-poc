@@ -48,7 +48,7 @@ def whatsapp(request):
                 body = results[0].introduction
                 body += "\n" + result.get_full_url()
             elif len(results) > 1:
-                body = "We've found %s articles:\n" % len(results)
+                body = "We've found %s articles:" % len(results)
                 for result in results:
                     body += "\n\n" + result.introduction
                     body += "\n" + result.get_full_url()
