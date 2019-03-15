@@ -124,7 +124,7 @@ def whatsapp(request):
                         "to": contact,
                         "type": "text",
                         "text": {
-                            "body": "page has no image, but Im sending you something that is text",
+                            "body": page.introduction,
                         }
                     }
                     response = requests.post(
