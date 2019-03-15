@@ -24,10 +24,10 @@ def whatsapp(request):
     except:
         return HttpResponse('No body in request')
     if message:
-        if 'join' in message:
-            body = "Welcome %s. I can help you find information about bread. Please type in a type of bread that you would like to know more about, and I will send you a message with some details about that bread! \xF0\x9F\x98\x83" % name
+        if 'Join' in message or 'join' in message:
+            body = "Welcome %s. I can help you find information about bread. Please type in a type of bread that you would like to know more about, and I will send you a message with some details about that bread! 😊🥖" % name
             data = {
-            "preview_url": True,
+            "preview_url": False,
             "recipient_type": "individual",
             "to": contact,
             "type": "text",
@@ -42,7 +42,7 @@ def whatsapp(request):
             response = requests.post(
                 url, data=json.dumps(data), headers=headers)
             return HttpResponse(response)
-        elif 'search' in message:
+        elif 'search' in message or 'Search' in message:
             # TODO: return whole body not just introduction
             search_word = message[7:]
             results = BreadPage.objects.live().search(search_word)
